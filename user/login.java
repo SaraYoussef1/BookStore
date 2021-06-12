@@ -1,6 +1,10 @@
+package user;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JFrame;
+import manager.ManagerMode;
 
 public class login extends javax.swing.JFrame {
 
@@ -183,12 +187,18 @@ public class login extends javax.swing.JFrame {
         String user = username_label.getText();
         String password = String.valueOf(password_label.getPassword());
         
-        Connection con = connection.getConnection();
+        //open manager form
+        ManagerMode form = new ManagerMode();
+        //signup form = new signup();
+        form.setVisible(true);
+        form.pack();
+        form.setLocationRelativeTo(null);
+        form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        bookInfo book = new bookInfo(4, "AnimalFarm", 1980, 15, "Art", 2, "Tom", 5);
+        /*bookInfo book = new bookInfo(5, "AnimalFarm", 1980, 15, "Art", 2, "Tom", 5);
         bookQuery q = new bookQuery();
         boolean created = q.AddBook(book);
-        System.out.println(created);
+        System.out.println(created);*/
     }//GEN-LAST:event_login_buttonActionPerformed
 
     /**
