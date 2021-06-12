@@ -3,7 +3,11 @@ package user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import manager.ManagerMode;
 
 public class login extends javax.swing.JFrame {
@@ -180,7 +184,9 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_showpasswordBoxActionPerformed
 
     private void login_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_buttonActionPerformed
-        // TODO add your handling code here:
+       
+        //Saraaaaaaaaaaaaaa
+        /* // TODO add your handling code here:
         PreparedStatement p;
         ResultSet r;
         
@@ -199,6 +205,44 @@ public class login extends javax.swing.JFrame {
         bookQuery q = new bookQuery();
         boolean created = q.AddBook(book);
         System.out.println(created);*/
+        
+        
+        //Enaaaaaaaaaaaaaaaaaaaaaaaas
+            PreparedStatement p ;
+            ResultSet r;
+            Connection con = connection.getConnection();
+            String user = username_label.getText();
+            String password = String.valueOf(password_label.getPassword());
+            String query1 = "SELECT * FROM USERS WHERE USERNAME = ? AND PASSWRD = ?";
+            String query2 = "SELECT * FROM MANAGERS WHERE USERNAME = ? AND PASSWRD = ?";
+            try {
+                p = con.prepareStatement(query1);
+                p.setString(1, user);
+                p.setString(2, password);
+                r = p.executeQuery();
+                if(r.next()){
+                    System.out.println("user logged in !!!");
+                    // open the form of the user
+                }
+                else{
+                    p = con.prepareStatement(query2);
+                    p.setString(1, user);
+                    p.setString(2, password);
+                    r = p.executeQuery();
+                    if(r.next()){
+                        System.out.println("manager logged in ");
+                        // open the form of the manager
+                    }
+                    else{
+                      System.out.println("error in username or password");
+                      JOptionPane.showMessageDialog(null, "Invalid Username Or Password\n \t Try again :)", "Login Error", 2);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+     
+        
     }//GEN-LAST:event_login_buttonActionPerformed
 
     /**
