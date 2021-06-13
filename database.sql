@@ -293,6 +293,7 @@ delimiter ;
 CREATE TABLE IF NOT EXISTS bookstore.USER_CART(
 ID INT NOT NULL,
 ISBN INT NOT NULL,
+QUANTITY INT NOT NULL,
 PRIMARY KEY (ID, ISBN),
 FOREIGN KEY (ISBN) REFERENCES bookstore.BOOK(ISBN) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (ID) REFERENCES bookstore.USERS(ID) ON DELETE CASCADE ON UPDATE CASCADE
@@ -310,8 +311,8 @@ INSERT INTO `bookstore`.`BOOK` (`ISBN`, `Title`, `Publication_Year`, `Price`, `C
 -- ---user
 INSERT INTO `bookstore`.`USERS` (`ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL_ADDRESS`, `PHONE`, `SHIPPING_ADDRESS`, `USERNAME`, `PASSWRD`) VALUES ('1', 'Enas', 'Morsy', 'asdf', '0123', 'dslkjf', 'Enmo2sh', '123');
 -- ---cart
-INSERT INTO `bookstore`.`USER_CART` (`ID`, `ISBN`) VALUES ('1', '1');
-INSERT INTO `bookstore`.`USER_CART` (`ID`, `ISBN`) VALUES ('1', '2');
+INSERT INTO `bookstore`.`USER_CART` (`ID`, `ISBN`, `QUANTITY`) VALUES ('1', '1','2');
+INSERT INTO `bookstore`.`USER_CART` (`ID`, `ISBN`,`QUANTITY`) VALUES ('1', '2', '75');
 
 
  -- ------------------------------------------
@@ -398,6 +399,17 @@ delimiter ;
 -- TRANSACTION
 -- --------------------------------
 
+DELIMITER $$
+CREATE trigger INSERT_INTO_CART
+BEFORE INSERT 
+ON USER_CART FOR EACH ROW
+BEGIN
+     IF (NEW.QUANTITY > ALL(SELECT Copies FROM BOOK WHERE (ISBN = NEW.ISBN))) THEN
+		signal sqlstate '45000' set message_text = 'ERROR! required quantity is greater than currently available'; 
+     END IF ;
+END$$ ;
+
+DELIMITER ;
 
 delimiter $$
 CREATE PROCEDURE CHECKOUT(USER_ID INT)
