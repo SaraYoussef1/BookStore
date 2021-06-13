@@ -9,8 +9,7 @@ public class connection {
         Connection con = null;
         String url = "jdbc:mysql://localhost:3306/bookstore?allowPublicKeyRetrieval=true&useSSL=false";
         String user = "root";
-        String password = "root";
-
+        String password = "root"; 
         try{
             con = DriverManager.getConnection(url, user, password);
         }

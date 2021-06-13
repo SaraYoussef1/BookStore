@@ -2,10 +2,8 @@ package manager;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLWarning;
 import javax.swing.JOptionPane;
 import user.bookInfo;
 import user.connection;
@@ -17,7 +15,6 @@ public class bookQuery {
         Connection con = connection.getConnection();
         boolean isBookInserted = false;
         String query = "{CALL Add_Book(?, ?, ?, ?, ?, ?, ?, ?)}";
-        
         
         try{
            
@@ -39,7 +36,7 @@ public class bookQuery {
                 JOptionPane.showMessageDialog(null, "invalid insertion");
             }
         } catch(SQLException ex){
-            Logger.getLogger(bookQuery.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         /*//try insertion
@@ -55,7 +52,7 @@ public class bookQuery {
     
     
     
-    public boolean ModifyBook(bookInfo book){
+    public boolean ModifyBook(bookInfo book, boolean modify_copies){
         Connection con = connection.getConnection();
         boolean isBookInserted = false;
         String query = "{CALL Modify_Book(?, ?, ?, ?, ?, ?, ?, ?)}";
@@ -108,7 +105,7 @@ public class bookQuery {
                 ps.setString(7, temp2);
             
             temp1 = book.getCopies();
-            if(temp1 == -1)
+            if(temp1 == -1 && !modify_copies)
                 ps.setNull(8, java.sql.Types.INTEGER);
             else
               ps.setInt(8, temp1);
@@ -121,7 +118,7 @@ public class bookQuery {
                 JOptionPane.showMessageDialog(null, "invalid modification");
             }
         } catch(SQLException ex){
-            Logger.getLogger(bookQuery.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         /*//try insertion

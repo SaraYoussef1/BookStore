@@ -56,6 +56,7 @@ public class insertBook extends javax.swing.JFrame {
         publisher = new javax.swing.JTextField();
         year = new javax.swing.JTextField();
         Insert = new javax.swing.JButton();
+        back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -210,6 +211,13 @@ public class insertBook extends javax.swing.JFrame {
             }
         });
 
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -219,7 +227,9 @@ public class insertBook extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(195, 195, 195)
+                                .addGap(27, 27, 27)
+                                .addComponent(back)
+                                .addGap(113, 113, 113)
                                 .addComponent(jLabel4))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
@@ -249,7 +259,9 @@ public class insertBook extends javax.swing.JFrame {
                                             .addComponent(copies, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel7)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(59, 59, 59)
+                                        .addComponent(jLabel7))
                                     .addComponent(jLabel6))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -271,7 +283,9 @@ public class insertBook extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -375,20 +389,29 @@ public class insertBook extends javax.swing.JFrame {
     }//GEN-LAST:event_yearActionPerformed
 
     private void InsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertActionPerformed
-    int ISBN = Integer.parseInt(isbn.getText());
-    String Title = title.getText();
-    int publication_year = Integer.parseInt(year.getText());
-    int Price = Integer.parseInt(price.getText());
-    String Category = category.getText();
-    int Threshold = Integer.parseInt(threshold.getText());
-    String Publisher = publisher.getText();
-    int Copies = Integer.parseInt(copies.getText());        
-    
-        bookInfo book = new bookInfo(ISBN, Title, publication_year, Price, Category, Threshold, Publisher, Copies);
-        bookQuery q = new bookQuery();
-        boolean created = q.AddBook(book);
-        System.out.println(created);
+        int ISBN = Integer.parseInt(isbn.getText());
+        String Title = title.getText();
+        int publication_year = Integer.parseInt(year.getText());
+        int Price = Integer.parseInt(price.getText());
+        String Category = category.getText();
+        int Threshold = Integer.parseInt(threshold.getText());
+        String Publisher = publisher.getText();
+        int Copies = Integer.parseInt(copies.getText());        
+
+            bookInfo book = new bookInfo(ISBN, Title, publication_year, Price, Category, Threshold, Publisher, Copies);
+            bookQuery q = new bookQuery();
+            boolean created = q.AddBook(book);
+            System.out.println(created);
     }//GEN-LAST:event_InsertActionPerformed
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        ManagerMode form = new ManagerMode();
+        form.setVisible(true);
+        form.pack();
+        form.setLocationRelativeTo(null);
+        form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(false);
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -427,6 +450,7 @@ public class insertBook extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Insert;
+    private javax.swing.JButton back;
     private javax.swing.JTextField category;
     private javax.swing.JTextField copies;
     private javax.swing.JTextField isbn;

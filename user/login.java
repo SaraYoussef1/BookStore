@@ -15,10 +15,17 @@ public class login extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
+    private static int id ;
     public login() {
         initComponents();
         //center 
         this.setLocationRelativeTo(null);
+    }
+    private void set_id(int id){
+        this.id = id;
+    }
+    public int get_id(){
+        return id;
     }
 
     /**
@@ -184,64 +191,47 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_showpasswordBoxActionPerformed
 
     private void login_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_buttonActionPerformed
-       
-        //Saraaaaaaaaaaaaaa
-        /* // TODO add your handling code here:
-        PreparedStatement p;
+
+        PreparedStatement p ;
         ResultSet r;
-        
+        Connection con = connection.getConnection();
         String user = username_label.getText();
         String password = String.valueOf(password_label.getPassword());
-        
-        //open manager form
-        ManagerMode form = new ManagerMode();
-        //signup form = new signup();
-        form.setVisible(true);
-        form.pack();
-        form.setLocationRelativeTo(null);
-        form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        /*bookInfo book = new bookInfo(5, "AnimalFarm", 1980, 15, "Art", 2, "Tom", 5);
-        bookQuery q = new bookQuery();
-        boolean created = q.AddBook(book);
-        System.out.println(created);*/
-        
-        
-        //Enaaaaaaaaaaaaaaaaaaaaaaaas
-            PreparedStatement p ;
-            ResultSet r;
-            Connection con = connection.getConnection();
-            String user = username_label.getText();
-            String password = String.valueOf(password_label.getPassword());
-            String query1 = "SELECT * FROM USERS WHERE USERNAME = ? AND PASSWRD = ?";
-            String query2 = "SELECT * FROM MANAGERS WHERE USERNAME = ? AND PASSWRD = ?";
-            try {
-                p = con.prepareStatement(query1);
-                p.setString(1, user);
-                p.setString(2, password);
-                r = p.executeQuery();
-                if(r.next()){
-                    System.out.println("user logged in !!!");
-                    // open the form of the user
+        String query = "SELECT ID,IS_MANAGER FROM USERS WHERE USERNAME = ? AND PASSWRD = ?";
+        try {
+            p = con.prepareStatement(query);
+            p.setString(1, user);
+            p.setString(2, password);
+            r = p.executeQuery();
+            while(r.next()){
+                int ID_Result = r.getInt("ID");
+                boolean IS_MANAGER_Result = r.getBoolean("IS_MANAGER");
+                set_id(ID_Result);
+                if(IS_MANAGER_Result){
+                    System.out.println("manager logged in !!");
+                    ManagerMode form =new  ManagerMode();
+                    form.setVisible(true);
+                    form.pack();
+                    form.setLocationRelativeTo(null);
+                    form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
                 else{
-                    p = con.prepareStatement(query2);
-                    p.setString(1, user);
-                    p.setString(2, password);
-                    r = p.executeQuery();
-                    if(r.next()){
-                        System.out.println("manager logged in ");
-                        // open the form of the manager
-                    }
-                    else{
-                      System.out.println("error in username or password");
-                      JOptionPane.showMessageDialog(null, "Invalid Username Or Password\n \t Try again :)", "Login Error", 2);
-                    }
+                    System.out.println("user logged in !!!");
+                    CustomerMode form = new CustomerMode();
+                    form.setVisible(true);
+                    form.pack();
+                    form.setLocationRelativeTo(null);
+                    form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+                this.setVisible(false);
             }
-     
+              //  System.out.println("error in username or password");
+                //  JOptionPane.showMessageDialog(null, "Invalid Username Or Password\n \t Try again :)", "Login Error", 2);
+            //}
+           
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
         
     }//GEN-LAST:event_login_buttonActionPerformed
 

@@ -1,8 +1,7 @@
 package user;
 
 
-public class bookInfo {
-    
+public class bookInfo {  
     int ISBN;
     String title;
     int publication_year;

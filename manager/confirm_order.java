@@ -8,7 +8,8 @@ package manager;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import user.connection;
@@ -17,12 +18,12 @@ import user.connection;
  *
  * @author sara
  */
-public class orderBook extends javax.swing.JFrame {
+public class confirm_order extends javax.swing.JFrame {
 
     /**
      * Creates new form insertBook
      */
-    public orderBook() {
+    public confirm_order() {
         initComponents();
     }
 
@@ -38,12 +39,10 @@ public class orderBook extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         l_isbn = new javax.swing.JLabel();
         isbn = new javax.swing.JTextField();
-        l_isbn1 = new javax.swing.JLabel();
-        quant = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        Order = new javax.swing.JButton();
+        Confirm = new javax.swing.JButton();
         back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,7 +53,9 @@ public class orderBook extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(1, 1, 1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -62,6 +63,10 @@ public class orderBook extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(50, 50, 50));
+
+        jLabel4.setFont(new java.awt.Font("Chilanka", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(232, 236, 241));
+        jLabel4.setText(" Confirm Order");
 
         l_isbn.setFont(new java.awt.Font("Chilanka", 1, 18)); // NOI18N
         l_isbn.setForeground(new java.awt.Color(232, 236, 241));
@@ -76,30 +81,13 @@ public class orderBook extends javax.swing.JFrame {
             }
         });
 
-        l_isbn1.setFont(new java.awt.Font("Chilanka", 1, 18)); // NOI18N
-        l_isbn1.setForeground(new java.awt.Color(232, 236, 241));
-        l_isbn1.setText("Quantity :");
-
-        quant.setBackground(new java.awt.Color(232, 236, 241));
-        quant.setFont(new java.awt.Font("Ubuntu Mono", 0, 12)); // NOI18N
-        quant.setForeground(new java.awt.Color(51, 51, 51));
-        quant.addActionListener(new java.awt.event.ActionListener() {
+        Confirm.setBackground(new java.awt.Color(50, 50, 50));
+        Confirm.setFont(new java.awt.Font("Chilanka", 1, 14)); // NOI18N
+        Confirm.setForeground(new java.awt.Color(232, 236, 241));
+        Confirm.setText("Confirm");
+        Confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quantActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Chilanka", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(232, 236, 241));
-        jLabel4.setText("ORDER BOOK");
-
-        Order.setBackground(new java.awt.Color(50, 50, 50));
-        Order.setFont(new java.awt.Font("Chilanka", 1, 24)); // NOI18N
-        Order.setForeground(new java.awt.Color(232, 236, 241));
-        Order.setText("Order");
-        Order.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OrderActionPerformed(evt);
+                ConfirmActionPerformed(evt);
             }
         });
 
@@ -117,44 +105,37 @@ public class orderBook extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(l_isbn)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(l_isbn1)))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(isbn, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                            .addComponent(quant)))
+                        .addGap(53, 53, 53)
+                        .addComponent(l_isbn)
+                        .addGap(72, 72, 72)
+                        .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(226, 226, 226)
-                        .addComponent(Order, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addGap(33, 33, 33)
                         .addComponent(back)
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel4)))
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(Confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(l_isbn)
-                    .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_isbn))
                 .addGap(38, 38, 38)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(l_isbn1)
-                    .addComponent(quant, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addComponent(Order, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addComponent(Confirm)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,7 +150,8 @@ public class orderBook extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -179,37 +161,32 @@ public class orderBook extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_isbnActionPerformed
 
-    private void quantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_quantActionPerformed
-
-    private void OrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderActionPerformed
-      int book_isbn = 0;
-      int quantity = 0;
+    private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
+        int book_isbn = 0;
         if(!isbn.getText().trim().isEmpty())
             book_isbn = Integer.parseInt(isbn.getText());
-        if(!quant.getText().trim().isEmpty())
-            quantity = Integer.parseInt(quant.getText());
-        if(book_isbn !=0 && quantity !=0){
+        if(book_isbn !=0 ){
             Connection con = connection.getConnection();
-            String query = "{CALL ADD_ORDER (?, ?)}";
+            String query = "{CALL CONFIRM_ORDER (?)}";
+            String query2 = "{CALL DELETE_ORDER (?)}";
             try{
                 CallableStatement ps = con.prepareCall(query);
                 ps.setInt(1, book_isbn);
-                ps.setInt(2, quantity);
-
                 if(ps.executeUpdate() != 0){
-                    JOptionPane.showMessageDialog(null, "ORDER IS DONE");
+                    ps = con.prepareCall(query2);
+                    ps.setInt(1, book_isbn);
+                    if(ps.executeUpdate() != 0)
+                        JOptionPane.showMessageDialog(null, "ORDER IS Deleted");
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "invalid order");
+                    JOptionPane.showMessageDialog(null, "invalid confirmation");
                 }
             }
             catch(SQLException ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
-    }//GEN-LAST:event_OrderActionPerformed
+    }//GEN-LAST:event_ConfirmActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         ManagerMode form = new ManagerMode();
@@ -250,13 +227,13 @@ public class orderBook extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new insertBook().setVisible(true);
+                new confirm_order().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Order;
+    private javax.swing.JButton Confirm;
     private javax.swing.JButton back;
     private javax.swing.JTextField isbn;
     private javax.swing.JLabel jLabel1;
@@ -264,7 +241,5 @@ public class orderBook extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel l_isbn;
-    private javax.swing.JLabel l_isbn1;
-    private javax.swing.JTextField quant;
     // End of variables declaration//GEN-END:variables
 }
